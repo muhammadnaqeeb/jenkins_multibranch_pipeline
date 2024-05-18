@@ -4,14 +4,36 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building App......'
-                bat  'node --version'
+                script {
+                    if (isUnix()) {
+                        sh '''
+                        echo "Building App..."
+                        node --version
+                        '''
+                    } else {
+                        bat '''
+                        echo Building App...
+                        node --version
+                        '''
+                    }
+                }
             }
         }
         stage('Test') {
             steps {
-                echo 'Testing App.......'
-                bat 'node main.js'
+                script {
+                    if (isUnix()) {
+                        sh '''
+                        echo "Testing App..."
+                        node main.js
+                        '''
+                    } else {
+                        bat '''
+                        echo Testing App...
+                        node main.js
+                        '''
+                    }
+                }
             }
         }
     }
